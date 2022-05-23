@@ -89,14 +89,16 @@ app.post("/usuarios", (req, res, next) => {
 app.put("/usuarios/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const { nombre, edad } = req.body;
-  for (let index = 0; index < usuarios.length; index++) {
-    if (usuarios[index].id === id) {
-      usuarios[index].nombre = nombre;
-      usuarios[index].edad = edad;
-    }
+
+  const index = usuarios.findIndex((u) => u.id === id);
+
+  if (index >= 0) {
+    usuarios[index].nombre = nombre;
+    usuarios[index].edad = edad;
+    return res.send({ data: usuarios, message: "Actualizado" });
   }
 
-  return res.send({ data: usuarios });
+  return res.send({ message: "No se encontró el id" });
 });
 
 app.listen(PORT, () => console.log(`Escuchando en el puerto ${PORT}`));
