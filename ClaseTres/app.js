@@ -12,6 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", usersRoutes);
 app.use("/repositorios", reposRoutes);
-app.use("/tareas", tareasRoutes);
+// app.use("/tareas", tareasRoutes);
 
 app.listen(PORT, () => console.log(`Escuchando en el puerto ${PORT}`));
