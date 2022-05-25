@@ -1,5 +1,7 @@
 const db = require("../db/index");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { TOKEN_SECRET } = require("../middlewares/validate");
 
 const getUsers = async (req, res, next) => {
   try {
@@ -89,9 +91,17 @@ const login = async (req, res, next) => {
         .json({ success: false, data: [], message: "¿Quién sos y por qué?" });
     }
 
+    const token = jwt.sign(
+      {
+        name: user.rows[0].name,
+        mail: user.rows[0].mail,
+      },
+      TOKEN_SECRET
+    );
+
     return res
       .status(200)
-      .json({ success: true, data: user.rows[0], message: "Éxito" });
+      .json({ success: true, data: user.rows[0], message: "Éxito", token });
   } catch (error) {
     return next(error);
   }

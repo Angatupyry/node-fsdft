@@ -5,9 +5,10 @@ const {
   updateUser,
   login,
 } = require("../controllers/user");
+const { verifyToken } = require("../middlewares/validate");
 const router = express.Router();
 
-router.get("/", getUsers);
+router.get("/", verifyToken, getUsers);
 
 router.post("/", createUser);
 
