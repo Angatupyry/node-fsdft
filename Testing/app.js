@@ -9,14 +9,13 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/users", async (req, res) => {
   const { password, username } = req.body;
   if (!password || !username) {
-    res.sendStatus(400);
-    return;
+    return res.status(401).json({ data: [], success: false });
   }
 
-  res.send({ userId: 0 });
+  return res.status(201).json({ data: [], success: true });
 });
 
-app.use("/", router);
+// app.use("/", router);
 
 app.listen(PORT, () => console.log(`Escuchando en el puerto ${PORT}`));
 
