@@ -10,8 +10,6 @@ const { verifyToken } = require("../middlewares/verify");
 
 router.post("/login", login);
 
-router.use(verifyToken);
-
 router.get("/", getUsers);
 
 router.post("/", createUser);

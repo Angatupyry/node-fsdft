@@ -1,15 +1,22 @@
 const db = require("../db/index");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 const { TOKEN_SECRET } = require("../middlewares/verify");
+
+const pokemons = [
+  { id: 1, name: "Pokemon uno", peso: "gordito" },
+  { id: 2, name: "Pokemon Dos", peso: "gordito lindo" },
+];
 
 const getUsers = async (req, res, next) => {
   try {
-    const users = await db.query("Select * from users");
+    const users = pokemons;
+    const pokeApi = await axios("https://pokeapi.co/api/v2/pokemon/");
 
     return res
       .status(200)
-      .json({ success: true, data: users.rows, message: ":D" });
+      .json({ success: true, data: pokeApi.data, message: ":D" });
   } catch (error) {
     return next(error);
   }
